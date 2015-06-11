@@ -8,4 +8,6 @@
         <!-- API 11 theme customizations can go here. -->
     </style>
 
+    <style name="NoTitle" parent="android:Theme.Holo.Light.NoActionBar"/>
+    
 </resources>
