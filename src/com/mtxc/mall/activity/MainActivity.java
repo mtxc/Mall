@@ -1,5 +1,6 @@
-package com.mtxc.mall;
+package com.mtxc.mall.activity;
 
+import com.mtxc.mall.R;
 import android.app.Activity;
 import android.os.Bundle;
 
