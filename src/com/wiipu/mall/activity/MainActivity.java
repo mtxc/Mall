@@ -1,6 +1,7 @@
 package com.wiipu.mall.activity;
 
 import java.util.ArrayList;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.drawable.TransitionDrawable;
@@ -8,11 +9,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
+
 import com.wiipu.mall.R;
 import com.wiipu.mall.fragment.HomeFragment;
 import com.wiipu.mall.utils.FragmentTag;
 import com.wiipu.mall.utils.LogType;
 import com.wiipu.mall.utils.LogUtil;
+import com.wiipu.mall.utils.NetworkManager;
 
 /**
  * 主activity
@@ -24,6 +27,10 @@ public class MainActivity extends Activity implements OnClickListener{
 	 */
 	private FragmentTag mCurrentTag;
 	/**
+	 * 当前Fragment
+	 */
+	private Fragment mCurrentFragment;
+	/**
 	 * 选项卡按钮数组
 	 */
 	private ArrayList<ImageButton> mBtnTabs;
@@ -33,13 +40,16 @@ public class MainActivity extends Activity implements OnClickListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		//初始化网络模块
+		NetworkManager.getInstance().init(getApplicationContext());
+		
 		initView();	
 		
 		if(savedInstanceState == null){
 			//记录当前Fragment
 			mCurrentTag = FragmentTag.TAG_HOME;
-			Fragment fragment = new HomeFragment();
-			getFragmentManager().beginTransaction().add(R.id.main_fragment, fragment, mCurrentTag.getTag()).commit();
+			mCurrentFragment = new HomeFragment();
+			getFragmentManager().beginTransaction().add(R.id.main_fragment, mCurrentFragment, mCurrentTag.getTag()).commit();
 	        ((TransitionDrawable) mBtnTabs.get(0).getDrawable()).startTransition(200);
 		}
 	}
@@ -96,17 +106,25 @@ public class MainActivity extends Activity implements OnClickListener{
 			Fragment toF = getFragmentManager().findFragmentByTag(to.getTag());
             if (null == toF) {    // 先判断是否被add过
             	try {
+            		//未add过，使用反射新建一个Fragment并add到FragmentManager中
 					toF = (Fragment) Class.forName(to.getTag()).newInstance();
 					getFragmentManager().beginTransaction().hide(currentF).add(R.id.main_fragment, toF, to.getTag()).commit(); // 隐藏当前的fragment，add下一个到Activity中
+					//切换按钮动画
 					switchAnimation(to.ordinal());
+					//更新当前Fragment
 					mCurrentTag = to;
+					mCurrentFragment = toF;
 				} catch (Exception e) {
 					LogUtil.log(LogType.ERROR, this.getClass(), "根据Tag创建Fragment实例出错");
 				}
             } else {
+            	//add过，直接hide当前，并show出目标Fragment
                 getFragmentManager().beginTransaction().hide(currentF).show(toF).commit(); // 隐藏当前的fragment，显示下一个
+                //切换按钮动画
                 switchAnimation(to.ordinal());
+                //更新当前Fragment
                 mCurrentTag = to;
+                mCurrentFragment = toF;
             }
 		}
 	}
@@ -119,4 +137,13 @@ public class MainActivity extends Activity implements OnClickListener{
 		((TransitionDrawable) mBtnTabs.get(mCurrentTag.ordinal()).getDrawable()).reverseTransition(200);
         ((TransitionDrawable) mBtnTabs.get(to).getDrawable()).startTransition(200);
 	}
+	
+	/**
+	 * 获取当前显示的Fragment
+	 * @return 当前Fragment
+	 */
+	public Fragment getCurrentFragment(){
+		return mCurrentFragment;
+	}
+	
 }

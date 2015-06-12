@@ -17,6 +17,7 @@
 package com.viewpagerindicator;
 
 import com.wiipu.mall.R;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -72,7 +73,8 @@ public class CirclePageIndicator extends View implements PageIndicator {
         this(context, attrs, R.attr.vpiCirclePageIndicatorStyle);
     }
 
-    public CirclePageIndicator(Context context, AttributeSet attrs, int defStyle) {
+    @SuppressWarnings("deprecation")
+	public CirclePageIndicator(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         if (isInEditMode()) return;
 
@@ -278,7 +280,8 @@ public class CirclePageIndicator extends View implements PageIndicator {
         canvas.drawCircle(dX, dY, mRadius, mPaintFill);
     }
 
-    public boolean onTouchEvent(android.view.MotionEvent ev) {
+    @SuppressLint("ClickableViewAccessibility")
+	public boolean onTouchEvent(android.view.MotionEvent ev) {
         if (super.onTouchEvent(ev)) {
             return true;
         }
@@ -539,7 +542,6 @@ public class CirclePageIndicator extends View implements PageIndicator {
             dest.writeInt(currentPage);
         }
 
-        @SuppressWarnings("UnusedDeclaration")
         public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
             @Override
             public SavedState createFromParcel(Parcel in) {
