@@ -12,7 +12,7 @@ import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 import com.android.volley.toolbox.NetworkImageView;
 import com.viewpagerindicator.CirclePageIndicator;
 import com.wiipu.mall.R;
-import com.wiipu.mall.utils.NetworkManager;
+import com.wiipu.mall.network.NetworkManager;
 
 /**
  * 首页Fragment

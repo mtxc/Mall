@@ -1,6 +1,7 @@
 package com.wiipu.mall.activity;
 
 import java.util.ArrayList;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Fragment;
@@ -9,12 +10,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
+
 import com.wiipu.mall.R;
 import com.wiipu.mall.fragment.HomeFragment;
+import com.wiipu.mall.network.NetworkManager;
 import com.wiipu.mall.utils.FragmentTag;
 import com.wiipu.mall.utils.LogType;
 import com.wiipu.mall.utils.LogUtil;
-import com.wiipu.mall.utils.NetworkManager;
 
 /**
  * 主activity
@@ -56,6 +58,13 @@ public class MainActivity extends Activity implements OnClickListener {
 			((TransitionDrawable) mBtnTabs.get(0).getDrawable())
 					.startTransition(200);
 		}
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		//退出时移除队列中的所有网络请求
+		NetworkManager.getInstance().remove();
 	}
 
 	/**
