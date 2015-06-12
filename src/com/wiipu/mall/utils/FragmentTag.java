@@ -5,6 +5,7 @@ package com.wiipu.mall.utils;
  * tag表示Fragment的完整类名
  */
 public enum FragmentTag {
+	
 	TAG_HOME("com.wiipu.mall.fragment.HomeFragment"),
 	TAG_CATEGORY("com.wiipu.mall.fragment.CategoryFragment"),
 	TAG_SCAN("com.wiipu.mall.fragment.ScanFragment"),
