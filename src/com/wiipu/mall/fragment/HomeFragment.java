@@ -1,7 +1,6 @@
 package com.wiipu.mall.fragment;
 
 import java.util.ArrayList;
-
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -10,12 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView.ScaleType;
 import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
-
 import com.android.volley.toolbox.NetworkImageView;
 import com.viewpagerindicator.CirclePageIndicator;
 import com.wiipu.mall.R;
-import com.wiipu.mall.utils.LogType;
-import com.wiipu.mall.utils.LogUtil;
 import com.wiipu.mall.utils.NetworkManager;
 
 /**
@@ -41,7 +37,6 @@ public class HomeFragment extends Fragment {
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_home, container, false);
 		initView(view);
-		LogUtil.log(LogType.DEBUG, getClass(), "onCreateView");
 		return view;
 	}
 
@@ -79,7 +74,8 @@ public class HomeFragment extends Fragment {
 			}
 		};
 		viewPager.setAdapter(adapter);
-		indicator = (CirclePageIndicator) view.findViewById(R.id.home_indicator);
+		indicator = (CirclePageIndicator) view
+				.findViewById(R.id.home_indicator);
 		indicator.setViewPager(viewPager);
 		viewPager.setInterval(AUTO_SCROLL_INTERVAL);
 		viewPager.startAutoScroll();
@@ -89,47 +85,48 @@ public class HomeFragment extends Fragment {
 	 * 获取ViewPager图片列表
 	 */
 	private void getViewImage() {
-		if(viewContainer == null){
+		if (viewContainer == null) {
 			viewContainer = new ArrayList<View>();
 		}
-		if(urls == null){
+		if (urls == null) {
 			urls = new ArrayList<String>();
 		}
 		urls = getImageUrls();
 		viewContainer.clear();
-		for(String url : urls){
+		for (String url : urls) {
 			NetworkImageView iv = new NetworkImageView(getActivity());
 			iv.setScaleType(ScaleType.FIT_XY);
 			NetworkManager.getInstance().setImageUrl(iv, url);
 			viewContainer.add(iv);
 		}
 	}
-	
+
 	/**
 	 * 获取广告位的图片资源url数组
 	 * 每次从服务器获得url数组先做永久性存储，获取时先从本地显示之前的缓存，等获取成功之后再调用notifyDataSetChanged()
+	 * 
 	 * @return url数组
 	 */
-	private ArrayList<String> getImageUrls(){
+	private ArrayList<String> getImageUrls() {
 		ArrayList<String> list = new ArrayList<String>();
-		////////////////////////////////////////
-		//////////////////假数据/////////////////
+		// //////////////////////////////////////
+		// ////////////////假数据/////////////////
 		list.add("http://b.hiphotos.baidu.com/image/pic/item/14ce36d3d539b6006bae3d86ea50352ac65cb79a.jpg");
 		list.add("http://c.hiphotos.baidu.com/image/pic/item/37d12f2eb9389b503564d2638635e5dde7116e63.jpg");
 		list.add("http://g.hiphotos.baidu.com/image/pic/item/cf1b9d16fdfaaf517578b38e8f5494eef01f7a63.jpg");
 		list.add("http://f.hiphotos.baidu.com/image/pic/item/77094b36acaf2eddce917bd88e1001e93901939a.jpg");
 		list.add("http://g.hiphotos.baidu.com/image/pic/item/f703738da97739124dd7b750fb198618367ae20a.jpg");
-		////////////////////////////////////////
+		// //////////////////////////////////////
 		return list;
 	}
-	
+
 	/**
 	 * 通知ViewPager广告位数据源改变
 	 */
-	public void notifyDataSetChanged(){
-		if(adapter != null)
+	public void notifyDataSetChanged() {
+		if (adapter != null)
 			adapter.notifyDataSetChanged();
-		if(indicator != null)
+		if (indicator != null)
 			indicator.notifyDataSetChanged();
 	}
 
