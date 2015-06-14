@@ -85,7 +85,7 @@ public class NetworkManager {
 				if (mQueue != null) {
 					// 将request响应实体加上公共部分，转化成JSONObject
 					JSONObject jsonRequest = JsonParseUtil.beanParseJson(
-							method, request);
+							method, request, mContext);
 					JsonObjectRequest req = new JsonObjectRequest(Method.POST,
 							Constants.URL, jsonRequest,
 							new Listener<JSONObject>() {

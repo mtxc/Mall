@@ -22,7 +22,6 @@ import com.wiipu.mall.utils.LogUtil;
  * 主activity
  */
 public class MainActivity extends Activity implements OnClickListener {
-
 	/**
 	 * 当前Fragment的key
 	 */
@@ -59,11 +58,11 @@ public class MainActivity extends Activity implements OnClickListener {
 					.startTransition(200);
 		}
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		//退出时移除队列中的所有网络请求
+		// 退出时移除队列中的所有网络请求
 		NetworkManager.getInstance().remove();
 	}
 
