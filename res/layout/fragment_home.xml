@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:scrollbars="none"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
@@ -24,6 +25,12 @@
                 android:layout_gravity="bottom"
                 android:layout_marginBottom="10dp" />
         </FrameLayout>
+        
+        <com.wiipu.mall.view.MyListView
+            android:id="@+id/home_lv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        
     </LinearLayout>
 
 </ScrollView>

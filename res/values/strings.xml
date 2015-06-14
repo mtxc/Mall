@@ -2,6 +2,10 @@
 <resources>
 
     <string name="app_name">Mall</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="home">首页</string>
+    <string name="category">分类</string>
+    <string name="scan">扫码</string>
+    <string name="cart">购物车</string>
+    <string name="my">我的</string>
 
 </resources>

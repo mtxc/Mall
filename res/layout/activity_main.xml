@@ -26,7 +26,8 @@
             android:layout_margin="5dp"
             android:scaleType="centerInside"
             android:background="#00000000"
-            android:src="@drawable/transition_btn_home"/>
+            android:src="@drawable/transition_btn_home"
+            android:contentDescription="@string/home"/>
         
         <ImageButton  
             android:id="@+id/main_btn_category"
@@ -36,7 +37,8 @@
             android:layout_margin="5dp"
             android:scaleType="centerInside"
             android:background="#00000000"
-            android:src="@drawable/transition_btn_category"/>
+            android:src="@drawable/transition_btn_category"
+            android:contentDescription="@string/category"/>
         
         <ImageButton  
             android:id="@+id/main_btn_scan"
@@ -46,7 +48,8 @@
             android:layout_margin="5dp"
             android:scaleType="centerInside"
             android:background="#00000000"
-            android:src="@drawable/transition_btn_scan"/>
+            android:src="@drawable/transition_btn_scan"
+            android:contentDescription="@string/scan"/>
         
         <ImageButton  
             android:id="@+id/main_btn_cart"
@@ -56,7 +59,8 @@
             android:layout_margin="5dp"
             android:scaleType="centerInside"
             android:background="#00000000"
-            android:src="@drawable/transition_btn_cart"/>
+            android:src="@drawable/transition_btn_cart"
+            android:contentDescription="@string/cart"/>
         
         <ImageButton  
             android:id="@+id/main_btn_my"
@@ -66,7 +70,8 @@
             android:layout_margin="5dp"
             android:scaleType="centerInside"
             android:background="#00000000"
-            android:src="@drawable/transition_btn_my"/>
+            android:src="@drawable/transition_btn_my"
+            android:contentDescription="@string/my"/>
         
     </LinearLayout>
 

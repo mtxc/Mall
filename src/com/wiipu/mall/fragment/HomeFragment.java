@@ -1,18 +1,27 @@
 package com.wiipu.mall.fragment;
 
 import java.util.ArrayList;
+
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView.ScaleType;
 import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
+
 import com.android.volley.toolbox.NetworkImageView;
 import com.viewpagerindicator.CirclePageIndicator;
 import com.wiipu.mall.R;
+import com.wiipu.mall.adapter.HomeListAdapter;
+import com.wiipu.mall.model.HomeFloorData;
+import com.wiipu.mall.model.ProductData;
 import com.wiipu.mall.network.NetworkManager;
+import com.wiipu.mall.utils.LogType;
+import com.wiipu.mall.utils.LogUtil;
+import com.wiipu.mall.view.MyListView;
 
 /**
  * 首页Fragment
@@ -25,12 +34,18 @@ public class HomeFragment extends Fragment {
 	private static final int AUTO_SCROLL_INTERVAL = 3000;
 	private AutoScrollViewPager viewPager;
 	private CirclePageIndicator indicator;
-	private PagerAdapter adapter;
+	private PagerAdapter pagerAdapter;
 	private ArrayList<View> viewContainer;
 	/**
 	 * 广告图片的url数组
 	 */
 	private ArrayList<String> urls;
+	/**
+	 * 商品列表部分
+	 */
+	private MyListView listView;
+	private HomeListAdapter listAdapter;
+	private ArrayList<HomeFloorData> floorDatas;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,10 +59,11 @@ public class HomeFragment extends Fragment {
 	 * 初始化视图
 	 */
 	private void initView(View view) {
+		// 广告位部分
 		viewPager = (AutoScrollViewPager) view
 				.findViewById(R.id.home_viewPager);
 		getViewImage();
-		adapter = new PagerAdapter() {
+		pagerAdapter = new PagerAdapter() {
 
 			@Override
 			public void destroyItem(ViewGroup container, int position,
@@ -73,16 +89,29 @@ public class HomeFragment extends Fragment {
 				return viewContainer.size();
 			}
 		};
-		viewPager.setAdapter(adapter);
+		viewPager.setAdapter(pagerAdapter);
 		indicator = (CirclePageIndicator) view
 				.findViewById(R.id.home_indicator);
 		indicator.setViewPager(viewPager);
 		viewPager.setInterval(AUTO_SCROLL_INTERVAL);
 		viewPager.startAutoScroll();
+		// 商品列表部分
+		listView = (MyListView) view.findViewById(R.id.home_lv);
+		floorDatas = getListData();
+		DisplayMetrics dm = new DisplayMetrics();
+		getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+		listAdapter = new HomeListAdapter(getActivity(), floorDatas,
+				R.layout.item_home_lv, dm.widthPixels);
+		listView.setAdapter(listAdapter);
+		listView.setDivider(null);
+		// 手动给ListView内容设置了高度，导致页面进入不在顶端，通过给顶端控件设置焦点的方法使view显示在顶端
+		viewPager.setFocusable(true);
+		viewPager.setFocusableInTouchMode(true);
+		viewPager.requestFocus();
 	}
 
 	/**
-	 * 获取ViewPager图片列表
+	 * 获取广告图片列表
 	 */
 	private void getViewImage() {
 		if (viewContainer == null) {
@@ -121,11 +150,39 @@ public class HomeFragment extends Fragment {
 	}
 
 	/**
+	 * 获取楼层列表的数据
+	 */
+	private ArrayList<HomeFloorData> getListData() {
+		ArrayList<HomeFloorData> list = new ArrayList<HomeFloorData>();
+		// ///////////////////////////////////////
+		// /////////////////假数据/////////////////
+		ArrayList<String> imgs = new ArrayList<String>();
+		ArrayList<ProductData> products = new ArrayList<ProductData>();
+		HomeFloorData floor;
+		ProductData product;
+		imgs.add("http://b.hiphotos.baidu.com/image/pic/item/14ce36d3d539b6006bae3d86ea50352ac65cb79a.jpg");
+		for (int i = 0; i < 10; i++) {
+			product = new ProductData();
+			product.setId(i);
+			product.setImgUrls(imgs);
+			products.add(product);
+		}
+		floor = new HomeFloorData();
+		floor.setFloor("1F");
+		floor.setProducts(products);
+		list.add(floor);
+		list.add(floor);
+		LogUtil.log(LogType.DEBUG, getClass(), list.toString());
+		// ///////////////////////////////////////
+		return list;
+	}
+
+	/**
 	 * 通知ViewPager广告位数据源改变
 	 */
 	public void notifyDataSetChanged() {
-		if (adapter != null)
-			adapter.notifyDataSetChanged();
+		if (pagerAdapter != null)
+			pagerAdapter.notifyDataSetChanged();
 		if (indicator != null)
 			indicator.notifyDataSetChanged();
 	}
