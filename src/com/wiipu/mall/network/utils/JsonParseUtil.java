@@ -10,12 +10,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
-import android.telephony.TelephonyManager;
 
 import com.wiipu.mall.network.beans.JsonPost;
 import com.wiipu.mall.network.beans.JsonReceive;
-import com.wiipu.mall.network.beans.ResponseHook;
-import com.wiipu.mall.utils.ReflectUtils;
+import com.wiipu.mall.utils.LogType;
+import com.wiipu.mall.utils.LogUtil;
 
 /**
  * Bean类和JsonObject互相转化的工具类
@@ -42,17 +41,13 @@ public class JsonParseUtil {
 		post.setTimestamp((new Date().getTime()) / 1000);
 		post.setRtimes(1);
 		post.setRequest(request);
-		post.setSign(generateSign(request));
-
+		post.setSign(generateSign(post));
 		Field[] fields = post.getClass().getDeclaredFields();
 		for (Field field : fields) {
 			try {
-				Method m = post.getClass().getMethod(
-						"get"
-								+ Character.toUpperCase(field.getName().charAt(
-										0)) + field.getName().substring(1));
-				Object object = m.invoke(post, m);
-				json.put(field.getName(), object);
+				Method m = post.getClass()
+						.getMethod(getterNameFromField(field));
+				json.put(field.getName(), m.invoke(post));
 			} catch (NoSuchMethodException e) {
 				e.printStackTrace();
 			} catch (JSONException e) {
@@ -72,50 +67,86 @@ public class JsonParseUtil {
 	/**
 	 * 将JsonObject对象解析为JsonReceive
 	 * 
-	 * @param json
-	 * @return
+	 * @param json 服务器返回的JSONObject
+	 * @return 解析出来的JsonReceive
 	 */
 	public static JsonReceive jsonParseBean(JSONObject json) {
 		JsonReceive receive = new JsonReceive();
+		try {
+			receive.setMethod(json.getString("method"));
+			receive.setStatus(json.getInt("status"));
+			receive.setTimes_used(json.getLong("times_used"));
+			receive.setTimestamp(json.getLong("timastamp"));
+			receive.setError(json.getString("error"));
+			receive.setResponse(json.get("response"));
+		} catch (JSONException e) {
+			e.printStackTrace();
+			LogUtil.log(LogType.ERROR, JsonParseUtil.class, "响应的json串解析错误");
+		}
 		return receive;
 	}
 
 	/**
 	 * 生成sign签名
-	 * */
-	private static String generateSign(Object request) {
+	 */
+	private static String generateSign(JsonPost post) {
 		// 声明一棵树来存储所有的字符串
 		TreeMap<String, Object> map = new TreeMap<String, Object>();
-		// 得到post中的所有方法的数组
-		/* Method[] methods = post.getClass().getDeclaredMethods(); */
-		Method[] methods2 = request.getClass().getDeclaredMethods();
-
-		// 将post中除了request和sign之外所有属性放入map中
-		/*
-		 * for (Method m : methods) { if (ReflectUtils.isGetterMethod(m) &&
-		 * isNeed(m)) { map.put(ReflectUtils.getName(m),
-		 * ReflectUtils.getValue(m, post)); } }
-		 */
-
-		for (Method m : methods2) {
-			map.put(ReflectUtils.getName(m), ReflectUtils.getValue(m, request));
+		// 将JsonPost中除sign和request之外的属性都放入TreeMap中
+		Field[] fields = post.getClass().getDeclaredFields();
+		for (Field field : fields) {
+			if (field.getName().equals("sign")
+					|| field.getName().equals("request"))
+				continue;
+			try {
+				Method m = post.getClass()
+						.getMethod(getterNameFromField(field));
+				map.put(field.getName(), m.invoke(post));
+			} catch (NoSuchMethodException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			}
 		}
-
+		// 将request中的所有属性都放入TreeMap中
+		fields = post.getRequest().getClass().getDeclaredFields();
+		for (Field field : fields) {
+			try {
+				Method m = post.getRequest().getClass()
+						.getMethod(getterNameFromField(field));
+				map.put(field.getName(), m.invoke(post.getRequest()));
+			} catch (NoSuchMethodException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			}
+		}
+		// 将secret追加到最后
 		String result = map.toString().replace("{", "").replace("}", "")
 				.replace(", ", "&")
 				+ "&secret=" + Constants.SECRET;
-
 		result = MD5Utils.string2MD5(result);
 		return result;
 	}
 
 	/**
-	 * 判断是否需要该方法
-	 * */
-	private static boolean isNeed(Method m) {
-		String name = m.getName();
-		if (name.endsWith("Sign") || name.endsWith("Request"))
-			return false;
-		return true;
+	 * 根据属性获得其get方法的方法名
+	 * 
+	 * @param field
+	 *            属性
+	 * @return 属性的get方法名
+	 */
+	private static String getterNameFromField(Field field) {
+		return "get" + Character.toUpperCase(field.getName().charAt(0))
+				+ field.getName().substring(1);
 	}
+
 }

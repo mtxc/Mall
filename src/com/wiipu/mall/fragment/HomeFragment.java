@@ -19,8 +19,6 @@ import com.wiipu.mall.adapter.HomeListAdapter;
 import com.wiipu.mall.model.HomeFloorData;
 import com.wiipu.mall.model.ProductData;
 import com.wiipu.mall.network.NetworkManager;
-import com.wiipu.mall.utils.LogType;
-import com.wiipu.mall.utils.LogUtil;
 import com.wiipu.mall.view.MyListView;
 
 /**
@@ -172,7 +170,6 @@ public class HomeFragment extends Fragment {
 		floor.setProducts(products);
 		list.add(floor);
 		list.add(floor);
-		LogUtil.log(LogType.DEBUG, getClass(), list.toString());
 		// ///////////////////////////////////////
 		return list;
 	}
