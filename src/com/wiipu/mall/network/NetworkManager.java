@@ -84,8 +84,8 @@ public class NetworkManager {
 			public void run() {
 				if (mQueue != null) {
 					// 将request响应实体加上公共部分，转化成JSONObject
-					JSONObject jsonRequest = JsonParseUtil
-							.beanParseJson(method, request);
+					JSONObject jsonRequest = JsonParseUtil.beanParseJson(
+							method, request, mContext);
 					JsonObjectRequest req = new JsonObjectRequest(Method.POST,
 							Constants.URL, jsonRequest,
 							new Listener<JSONObject>() {
@@ -93,10 +93,15 @@ public class NetworkManager {
 								@Override
 								public void onResponse(JSONObject json) {
 									// 请求成功响应，将JSONObject转换成JsonReceive
-									LogUtil.log(LogType.DEBUG, getClass(), "请求成功：" + json.toString());
-									if(responseHook != null){
+									LogUtil.log(LogType.DEBUG, getClass(),
+											"请求成功：" + json.toString());
+									if (responseHook != null) {
 										try {
-											responseHook.newInstance().deal(mContext, JsonParseUtil.jsonParseBean(json));
+											responseHook
+													.newInstance()
+													.deal(mContext,
+															JsonParseUtil
+																	.jsonParseBean(json));
 										} catch (InstantiationException e) {
 											e.printStackTrace();
 										} catch (IllegalAccessException e) {
