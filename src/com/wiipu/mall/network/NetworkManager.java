@@ -14,6 +14,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.wiipu.mall.R;
+import com.wiipu.mall.network.beans.ErrorHook;
+import com.wiipu.mall.network.beans.ResponseHook;
 import com.wiipu.mall.network.utils.Constants;
 import com.wiipu.mall.network.utils.JsonParseUtil;
 import com.wiipu.mall.utils.LogType;
@@ -62,26 +64,63 @@ public class NetworkManager {
 		mQueue = Volley.newRequestQueue(mContext.getApplicationContext());
 	}
 
-	public void post(String method, final Object request) {
+	/**
+	 * 向服务器发送请求
+	 * 
+	 * @param method
+	 *            请求的接口名
+	 * @param request
+	 *            请求的实体
+	 * @param responseHook
+	 *            响应成功的接口class
+	 * @param errorHook
+	 *            响应失败的接口class
+	 */
+	public void post(final String method, final Object request,
+			final Class<? extends ResponseHook> responseHook,
+			final Class<? extends ErrorHook> errorHook) {
 		new Thread() {
 			@Override
 			public void run() {
 				if (mQueue != null) {
+					// 将request响应实体加上公共部分，转化成JSONObject
 					JSONObject jsonRequest = JsonParseUtil
-							.beanParseJson(request);
+							.beanParseJson(method, request);
 					JsonObjectRequest req = new JsonObjectRequest(Method.POST,
 							Constants.URL, jsonRequest,
 							new Listener<JSONObject>() {
 
 								@Override
-								public void onResponse(JSONObject response) {
-									// 请求成功响应
+								public void onResponse(JSONObject json) {
+									// 请求成功响应，将JSONObject转换成JsonReceive
+									LogUtil.log(LogType.DEBUG, getClass(), "请求成功：" + json.toString());
+									if(responseHook != null){
+										try {
+											responseHook.newInstance().deal(mContext, JsonParseUtil.jsonParseBean(json));
+										} catch (InstantiationException e) {
+											e.printStackTrace();
+										} catch (IllegalAccessException e) {
+											e.printStackTrace();
+										}
+									}
 								}
 							}, new ErrorListener() {
 
 								@Override
 								public void onErrorResponse(VolleyError error) {
-									// 请求错误
+									// 请求失败
+									LogUtil.log(LogType.ERROR, getClass(),
+											"请求失败");
+									if (errorHook != null) {
+										try {
+											errorHook.newInstance().deal(
+													mContext, error);
+										} catch (InstantiationException e) {
+											e.printStackTrace();
+										} catch (IllegalAccessException e) {
+											e.printStackTrace();
+										}
+									}
 								}
 							});
 					// 添加到请求队列
