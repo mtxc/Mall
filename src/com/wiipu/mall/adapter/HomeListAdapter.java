@@ -13,9 +13,9 @@ import com.mtxc.universallistview.ViewHolder;
 import com.wiipu.mall.R;
 import com.wiipu.mall.model.HomeFloorData;
 import com.wiipu.mall.model.ProductData;
+import com.wiipu.mall.noscrollview.NoScrollGridView;
 import com.wiipu.mall.utils.LogType;
 import com.wiipu.mall.utils.LogUtil;
-import com.wiipu.mall.view.MyGridView;
 
 /**
  * 首页ListView的适配器
@@ -39,7 +39,7 @@ public class HomeListAdapter extends UniversalAdapter<HomeFloorData> {
 	public void updateItem(ViewHolder holder, HomeFloorData data) {
 		((TextView) holder.getView(R.id.item_home_tv)).setText(data.getFloor());
 		if (data.getProducts() != null) {
-			MyGridView gridView = (MyGridView) holder
+			NoScrollGridView gridView = (NoScrollGridView) holder
 					.getView(R.id.item_home_grid);
 			HomeGridAdapter adapter = new HomeGridAdapter(context,
 					data.getProducts(), R.layout.item_home_grid, screenWidth);

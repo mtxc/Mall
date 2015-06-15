@@ -7,5 +7,6 @@
     <string name="scan">扫码</string>
     <string name="cart">购物车</string>
     <string name="my">我的</string>
+    <string name="find_et_hint">一件好T恤一份好心情</string>
 
 </resources>

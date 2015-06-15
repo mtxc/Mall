@@ -1,6 +1,6 @@
 package com.wiipu.mall.fragment;
 
-import android.app.Fragment;
+import android.app.ListFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,23 +8,16 @@ import android.view.ViewGroup;
 import com.wiipu.mall.R;
 
 /**
- * 商品分类Fragment
+ * 分类页面右部的fragment
  */
-public class CategoryFragment extends Fragment {
+public class CategoryRightFragment extends ListFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_category, container, false);
-		initView(view);
+		View view = inflater.inflate(R.layout.fragment_category_right,
+				container, false);
 		return view;
 	}
-	
-	/**
-	 * 初始化视图
-	 * @param view 父视图
-	 */
-	private void initView(View view){
-	}
-	
+
 }

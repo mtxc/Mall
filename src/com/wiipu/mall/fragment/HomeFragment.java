@@ -1,6 +1,7 @@
 package com.wiipu.mall.fragment;
 
 import java.util.ArrayList;
+
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView.ScaleType;
 import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
+
 import com.android.volley.toolbox.NetworkImageView;
 import com.viewpagerindicator.CirclePageIndicator;
 import com.wiipu.mall.R;
@@ -17,7 +19,7 @@ import com.wiipu.mall.adapter.HomeListAdapter;
 import com.wiipu.mall.model.HomeFloorData;
 import com.wiipu.mall.model.ProductData;
 import com.wiipu.mall.network.NetworkManager;
-import com.wiipu.mall.view.MyListView;
+import com.wiipu.mall.noscrollview.NoScrollListView;
 
 /**
  * 首页Fragment
@@ -39,7 +41,7 @@ public class HomeFragment extends Fragment {
 	/**
 	 * 商品列表部分
 	 */
-	private MyListView listView;
+	private NoScrollListView listView;
 	private HomeListAdapter listAdapter;
 	private ArrayList<HomeFloorData> floorDatas;
 
@@ -92,7 +94,7 @@ public class HomeFragment extends Fragment {
 		viewPager.setInterval(AUTO_SCROLL_INTERVAL);
 		viewPager.startAutoScroll();
 		// 商品列表部分
-		listView = (MyListView) view.findViewById(R.id.home_lv);
+		listView = (NoScrollListView) view.findViewById(R.id.home_lv);
 		floorDatas = getListData();
 		DisplayMetrics dm = new DisplayMetrics();
 		getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
