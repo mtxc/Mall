@@ -1,7 +1,6 @@
 package com.wiipu.mall.fragment;
 
 import java.util.ArrayList;
-
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView.ScaleType;
 import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
-
 import com.android.volley.toolbox.NetworkImageView;
 import com.viewpagerindicator.CirclePageIndicator;
 import com.wiipu.mall.R;

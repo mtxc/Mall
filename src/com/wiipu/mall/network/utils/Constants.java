@@ -15,8 +15,9 @@ public class Constants {
 	/**
 	 * 网络请求的url
 	 */
-	public static final String URL = "";
+	public static final String URL = "http://192.168.0.104:8080/VolleyTest/servlet/TestServlet";
 	public static final String APPKEY = "888";
+	public static final int RTIMES = 1;
 	public static final String SECRET = "123456";
 
 	/**

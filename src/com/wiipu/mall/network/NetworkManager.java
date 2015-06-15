@@ -1,9 +1,7 @@
 package com.wiipu.mall.network;
 
 import org.json.JSONObject;
-
 import android.content.Context;
-
 import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.ErrorListener;
@@ -75,10 +73,12 @@ public class NetworkManager {
 	 *            响应成功的接口class
 	 * @param errorHook
 	 *            响应失败的接口class
+	 * @param response
+	 *            响应的实体类class
 	 */
-	public void post(final String method, final Object request,
+	public <T> void post(final String method, final Object request,
 			final Class<? extends ResponseHook> responseHook,
-			final Class<? extends ErrorHook> errorHook) {
+			final Class<? extends ErrorHook> errorHook, final Class<T> response) {
 		new Thread() {
 			@Override
 			public void run() {
@@ -86,6 +86,8 @@ public class NetworkManager {
 					// 将request响应实体加上公共部分，转化成JSONObject
 					JSONObject jsonRequest = JsonParseUtil.beanParseJson(
 							method, request, mContext);
+					LogUtil.log(LogType.DEBUG, getClass(), "请求封装完成："
+							+ jsonRequest.toString());
 					JsonObjectRequest req = new JsonObjectRequest(Method.POST,
 							Constants.URL, jsonRequest,
 							new Listener<JSONObject>() {
@@ -97,11 +99,12 @@ public class NetworkManager {
 											"请求成功：" + json.toString());
 									if (responseHook != null) {
 										try {
-											responseHook
-													.newInstance()
-													.deal(mContext,
-															JsonParseUtil
-																	.jsonParseBean(json));
+											responseHook.newInstance().deal(
+													mContext,
+													JsonParseUtil
+															.jsonParseBean(
+																	json,
+																	response));
 										} catch (InstantiationException e) {
 											e.printStackTrace();
 										} catch (IllegalAccessException e) {
