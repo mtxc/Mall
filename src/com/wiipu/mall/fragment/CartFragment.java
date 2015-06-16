@@ -2,13 +2,11 @@ package com.wiipu.mall.fragment;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.wiipu.mall.R;
 import com.wiipu.mall.activity.CheckOutActivity;
 import com.wiipu.mall.shoppingcart.ShopAdapter;
 import com.wiipu.mall.shoppingcart.ShopBean;
 import com.wiipu.mall.shoppingcart.ShoppingCanst;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -22,7 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.CheckBox;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;

@@ -1,7 +1,6 @@
 package com.wiipu.mall.activity;
 
 import java.util.ArrayList;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Fragment;
@@ -10,7 +9,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
-
 import com.wiipu.mall.R;
 import com.wiipu.mall.fragment.HomeFragment;
 import com.wiipu.mall.network.NetworkManager;
@@ -57,6 +55,42 @@ public class MainActivity extends Activity implements OnClickListener {
 			((TransitionDrawable) mBtnTabs.get(0).getDrawable())
 					.startTransition(200);
 		}
+		
+//		Mall mall = new Mall();
+//		ArrayList<Floor> floors = new ArrayList<Floor>();
+//		Floor floor = new Floor();
+//		ArrayList<Product> products = new ArrayList<Product>();
+//		products.add(new Product(0, "上衣"));
+//		products.add(new Product(1, "毛衣"));
+//		floor.setName("1F");
+//		floor.setProducts(products);
+//		floors.add(floor);
+//		products = new ArrayList<Product>();
+//		products.add(new Product(2, "T恤"));
+//		products.add(new Product(3, "裤子"));
+//		floor = new Floor();
+//		floor.setName("2F");
+//		floor.setProducts(products);
+//		floors.add(floor);
+//		mall.setFloors(floors);
+//		ObjectMapper objectMapper = new ObjectMapper();
+//		String json = "";
+//		try {
+//			json = objectMapper.writeValueAsString(mall);
+//		} catch (JsonGenerationException e) {
+//			e.printStackTrace();
+//		} catch (JsonMappingException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		try {
+//			LogUtil.log(LogType.DEBUG, getClass(), json);
+//			Mall response = (Mall) JsonParseUtil.jsonParseResponse(new JSONObject(json), Mall.class, Floor.class, Product.class);
+//			LogUtil.log(LogType.DEBUG, getClass(), response.toString());
+//		} catch (JSONException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	@Override

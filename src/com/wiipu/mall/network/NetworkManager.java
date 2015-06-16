@@ -73,12 +73,12 @@ public class NetworkManager {
 	 *            响应成功的接口class
 	 * @param errorHook
 	 *            响应失败的接口class
-	 * @param response
-	 *            响应的实体类class
+	 * @param responses
+	 *            响应的实体类class数组
 	 */
-	public <T> void post(final String method, final Object request,
+	public void post(final String method, final Object request,
 			final Class<? extends ResponseHook> responseHook,
-			final Class<? extends ErrorHook> errorHook, final Class<T> response) {
+			final Class<? extends ErrorHook> errorHook, final Class<?>... responses) {
 		new Thread() {
 			@Override
 			public void run() {
@@ -104,7 +104,7 @@ public class NetworkManager {
 													JsonParseUtil
 															.jsonParseBean(
 																	json,
-																	response));
+																	responses));
 										} catch (InstantiationException e) {
 											e.printStackTrace();
 										} catch (IllegalAccessException e) {

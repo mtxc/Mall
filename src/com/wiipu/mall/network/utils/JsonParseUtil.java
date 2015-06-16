@@ -1,14 +1,25 @@
 package com.wiipu.mall.network.utils;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import android.content.Context;
+
 import com.wiipu.mall.network.beans.JsonPost;
 import com.wiipu.mall.network.beans.JsonReceive;
 import com.wiipu.mall.utils.LogType;
@@ -59,11 +70,11 @@ public class JsonParseUtil {
 	 * @param json
 	 *            服务器返回的JSONObject
 	 * @param response
-	 *            响应的实体类class
+	 *            响应的实体类class数组
 	 * @return 解析出来的JsonReceive
 	 */
-	public static <T> JsonReceive jsonParseBean(JSONObject json,
-			Class<T> response) {
+	public static JsonReceive jsonParseBean(JSONObject json,
+			Class<?>... responses) {
 		JsonReceive receive = new JsonReceive();
 		try {
 			receive.setMethod(json.getString("method"));
@@ -72,7 +83,7 @@ public class JsonParseUtil {
 			receive.setTimestamp(json.getLong("timestamp"));
 			receive.setError(json.getString("error"));
 			receive.setResponse(jsonParseResponse(
-					(JSONObject) json.get("response"), response));
+					(JSONObject) json.get("response"), responses));
 		} catch (JSONException e) {
 			e.printStackTrace();
 			LogUtil.log(LogType.ERROR, JsonParseUtil.class, "响应的json串解析错误");
@@ -89,42 +100,64 @@ public class JsonParseUtil {
 	 *            响应的实体类class数组
 	 * @return 解析好的response
 	 */
-	private static <T> T jsonParseResponse(JSONObject json, Class<T> response) {
-		T t = null;
-		try {
-			t = objectMapper.readValue(json.toString(), response);
-		} catch (JsonParseException e) {
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+	public static Object jsonParseResponse(JSONObject json, Class<?>... responses) {
+		Object obj = null;
+		if(responses.length > 1){
+			try {
+				obj = responses[0].newInstance();
+				for(Field field : responses[0].getDeclaredFields()){
+					if(field.getType().isAssignableFrom(ArrayList.class)){
+						// 如果是数组, 递归解析
+						JSONArray array = json.getJSONArray(field.getName());
+						Object[] objects = (Object[]) Array.newInstance(responses[1], array.length());
+						for(int i=0; i<objects.length; i++){
+							objects[i] = jsonParseResponse(array.getJSONObject(i), Arrays.copyOfRange(responses, 1, responses.length));
+						}
+						List<?> list = asList(objects);
+						Method m = responses[0].getMethod(ReflectUtil.setterNameFromField(field), list.getClass());
+						m.invoke(obj, list);
+					}else{
+						// 如果不是数组，直接调用set方法
+						Method m = responses[0].getMethod(ReflectUtil.setterNameFromField(field), field.getType());
+						m.invoke(obj, json.get(field.getName()));
+					}
+				}
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (JSONException e) {
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			}
+		}else{
+			try {
+				obj = objectMapper.readValue(json.toString(), responses[0]);
+			} catch (JsonParseException e) {
+				e.printStackTrace();
+			} catch (JsonMappingException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-		return t;
+		return obj;
 	}
-
+	
 	/**
-	 * 根据属性获得其get方法的方法名
-	 * 
-	 * @param field
-	 *            属性
-	 * @return 属性的get方法名
+	 * 将对象数组转化成对应的ArrayList
+	 * @param a 对象数组
+	 * @return 转化后的ArrayList
 	 */
-	public static String getterNameFromField(Field field) {
-		return "get" + Character.toUpperCase(field.getName().charAt(0))
-				+ field.getName().substring(1);
-	}
-
-	/**
-	 * 根据属性获得其set方法的方法名
-	 * 
-	 * @param field
-	 *            属性
-	 * @return 属性的set方法名
-	 */
-	public static String setterNameFromField(Field field) {
-		return "set" + Character.toUpperCase(field.getName().charAt(0))
-				+ field.getName().substring(1);
+	public static <T> List<T> asList(T... a) {
+		List<T> list = new ArrayList<T>();
+		Collections.addAll(list, a);
+		return list;
 	}
 
 }

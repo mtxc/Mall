@@ -6,8 +6,8 @@ import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.TreeMap;
 import com.wiipu.mall.network.utils.Constants;
-import com.wiipu.mall.network.utils.JsonParseUtil;
 import com.wiipu.mall.network.utils.MD5Utils;
+import com.wiipu.mall.network.utils.ReflectUtil;
 import android.content.Context;
 
 /**
@@ -74,7 +74,7 @@ public class JsonPost {
 		for (Field field : fields) {
 			try {
 				Method m = request.getClass().getMethod(
-						JsonParseUtil.getterNameFromField(field));
+						ReflectUtil.getterNameFromField(field));
 				map.put(field.getName(), m.invoke(request));
 			} catch (NoSuchMethodException e) {
 				e.printStackTrace();
