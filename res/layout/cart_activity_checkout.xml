@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <include layout="@layout/cart_title"/>
+    <include layout="@layout/cart_line_h"/>
+    <ScrollView 
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+		    <RelativeLayout 
+		        android:id="@+id/addressRelative"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:paddingLeft="5dp"
+		        android:paddingRight="5dp"
+		        android:background="@color/white">
+		        <!-- 收货人姓名 -->
+		        <TextView 
+		            android:id="@+id/addresseeName"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_marginTop="10dp"
+		            android:layout_alignParentLeft="true"/>
+		        <!-- 收货人区地址 -->
+		        <TextView 
+		            android:id="@+id/smearedAddress"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_marginTop="10dp"
+		            android:layout_marginRight="15dp"
+		            android:layout_alignParentRight="true"/>
+		        <!-- next图标 -->
+		        <TextView 
+		            android:id="@+id/addressNext"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:drawableRight="@drawable/next"
+		            android:layout_below="@id/addresseeName"
+		            android:layout_alignParentRight="true"/>
+		        <!-- 详细地址 -->
+		        <TextView 
+		            android:id="@+id/detailAddress"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:singleLine="true"
+		            android:layout_marginRight="15dp"
+		            android:layout_marginBottom="5dp"
+		            android:layout_below="@id/addressNext"/>
+		    </RelativeLayout>
+			<com.wiipu.mall.cartlayout.NoScrollListView
+			    android:id="@+id/checkOutListView"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"/>
+		</LinearLayout>
+	</ScrollView>
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:background="@color/gray"
+	    android:orientation="vertical">
+        <!-- 显示商品数量和总金额 -->
+	    <TextView 
+	        android:id="@+id/checkOutAllPrice"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="10dp"
+	        android:gravity="center_horizontal"
+	        android:textColor="@color/red"/>
+	    <!-- 确定按钮 -->
+	    <Button 
+	        android:id="@+id/sureCheckOut"
+	        android:layout_width="match_parent"
+	        android:layout_height="40dp"
+	        android:layout_marginTop="10dp"
+	        android:layout_marginBottom="15dp"
+	        android:text="@string/sure"
+	        android:textColor="@color/white"
+	        android:background="@drawable/round_rect_bg_red"/>
+	</LinearLayout>
+
+</LinearLayout>
