@@ -11,8 +11,8 @@
         android:padding="5dp"
         android:drawablePadding="5dp"
         android:gravity="center_vertical"
-        android:drawableLeft="@drawable/back"
-        android:layout_alignParentLeft="true"/>
+        android:drawableStart="@drawable/back"
+        android:layout_alignParentStart="true"/>
 	<TextView 
 	    android:id="@+id/title_center"
 	    android:textSize="20sp"

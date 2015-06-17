@@ -69,21 +69,23 @@ public class JsonPost {
 		map.put("sn", sn);
 		map.put("timestamp", timestamp);
 		map.put("rtimes", rtimes);
-		// 将request中的所有属性都放入TreeMap中
-		Field[] fields = request.getClass().getDeclaredFields();
-		for (Field field : fields) {
-			try {
-				Method m = request.getClass().getMethod(
-						ReflectUtil.getterNameFromField(field));
-				map.put(field.getName(), m.invoke(request));
-			} catch (NoSuchMethodException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				e.printStackTrace();
+		if(request != null){
+			// 将request中的所有属性都放入TreeMap中
+			Field[] fields = request.getClass().getDeclaredFields();
+			for (Field field : fields) {
+				try {
+					Method m = request.getClass().getMethod(
+							ReflectUtil.getterNameFromField(field));
+					map.put(field.getName(), m.invoke(request));
+				} catch (NoSuchMethodException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		// 将secret追加到最后
