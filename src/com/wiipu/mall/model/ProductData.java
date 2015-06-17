@@ -15,6 +15,24 @@ public class ProductData {
 	 * 商品图片url数组
 	 */
 	private ArrayList<String> imgUrls;
+	private String info;
+	private int price;
+
+	public String getInfo() {
+		return info;
+	}
+
+	public void setInfo(String info) {
+		this.info = info;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
 
 	public int getId() {
 		return id;
@@ -34,7 +52,8 @@ public class ProductData {
 
 	@Override
 	public String toString() {
-		return "ProductData [id=" + id + ", imgUrls=" + imgUrls + "]";
+		return "ProductData [id=" + id + ", imgUrls=" + imgUrls + ", info="
+				+ info + ", price=" + price + "]";
 	}
 
 }

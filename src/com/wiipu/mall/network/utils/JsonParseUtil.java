@@ -69,7 +69,7 @@ public class JsonParseUtil {
 	 * 
 	 * @param json
 	 *            服务器返回的JSONObject
-	 * @param response
+	 * @param responses
 	 *            响应的实体类class数组
 	 * @return 解析出来的JsonReceive
 	 */
@@ -82,8 +82,14 @@ public class JsonParseUtil {
 			receive.setTimes_used(json.getLong("times_used"));
 			receive.setTimestamp(json.getLong("timestamp"));
 			receive.setError(json.getString("error"));
-			receive.setResponse(jsonParseResponse(
-					(JSONObject) json.get("response"), responses));
+			Object response = null;
+			if(responses.length > 0){
+				 response = jsonParseResponse(
+							(JSONObject) json.get("response"), responses);
+			}else{
+				LogUtil.log(LogType.ERROR, JsonParseUtil.class, "未传入响应的Response实体类class对象");
+			}
+			receive.setResponse(response);
 		} catch (JSONException e) {
 			e.printStackTrace();
 			LogUtil.log(LogType.ERROR, JsonParseUtil.class, "响应的json串解析错误");

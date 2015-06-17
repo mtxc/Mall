@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView.ScaleType;
 import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 
@@ -44,6 +46,11 @@ public class HomeFragment extends Fragment {
 	private NoScrollListView listView;
 	private HomeListAdapter listAdapter;
 	private ArrayList<HomeFloorData> floorDatas;
+	/**
+	 * 顶部搜索
+	 */
+	private EditText etSearch;
+	private ImageButton ibSearch;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -96,16 +103,27 @@ public class HomeFragment extends Fragment {
 		// 商品列表部分
 		listView = (NoScrollListView) view.findViewById(R.id.home_lv);
 		floorDatas = getListData();
-		DisplayMetrics dm = new DisplayMetrics();
-		getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
 		listAdapter = new HomeListAdapter(getActivity(), floorDatas,
-				R.layout.item_home_lv, dm.widthPixels);
+				R.layout.item_home_lv);
 		listView.setAdapter(listAdapter);
 		listView.setDivider(null);
 		// 手动给ListView内容设置了高度，导致页面进入不在顶端，通过给顶端控件设置焦点的方法使view显示在顶端
 		viewPager.setFocusable(true);
 		viewPager.setFocusableInTouchMode(true);
 		viewPager.requestFocus();
+		// 顶部搜索部分
+		etSearch = (EditText) view.findViewById(R.id.top_et_search);
+		ibSearch = (ImageButton) view.findViewById(R.id.top_ib_search);
+		ibSearch.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// ////////////////////////////////////
+				// /////////向服务器发送搜索请求///////////
+				etSearch.getText().toString().trim();
+				// ////////////////////////////////////
+			}
+		});
 	}
 
 	/**
@@ -163,6 +181,8 @@ public class HomeFragment extends Fragment {
 			product = new ProductData();
 			product.setId(i);
 			product.setImgUrls(imgs);
+			product.setInfo("上岛咖啡上岛咖啡上岛咖啡上岛咖啡上岛咖啡");
+			product.setPrice(i*2);
 			products.add(product);
 		}
 		floor = new HomeFloorData();

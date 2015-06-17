@@ -22,27 +22,19 @@ import com.wiipu.mall.utils.LogUtil;
  */
 public class HomeListAdapter extends UniversalAdapter<HomeFloorData> {
 
-	private int screenWidth;
-
 	public HomeListAdapter(Context context, List<HomeFloorData> datas,
 			int itemLayoutId) {
 		super(context, datas, itemLayoutId);
 	}
-
-	public HomeListAdapter(Context context, List<HomeFloorData> datas,
-			int itemLayoutId, int screenWidth) {
-		this(context, datas, itemLayoutId);
-		this.screenWidth = screenWidth;
-	}
-
+	
 	@Override
 	public void updateItem(ViewHolder holder, HomeFloorData data) {
-		((TextView) holder.getView(R.id.item_home_tv)).setText(data.getFloor());
+		((TextView) holder.getView(R.id.item_home_tv_floor)).setText(data.getFloor());
 		if (data.getProducts() != null) {
 			NoScrollGridView gridView = (NoScrollGridView) holder
 					.getView(R.id.item_home_grid);
 			HomeGridAdapter adapter = new HomeGridAdapter(context,
-					data.getProducts(), R.layout.item_home_grid, screenWidth);
+					data.getProducts(), R.layout.item_home_grid);
 			gridView.setAdapter(adapter);
 			// 设置商品的点击事件
 			gridView.setOnItemClickListener(new OnItemClickListener() {

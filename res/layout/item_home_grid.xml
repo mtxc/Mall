@@ -2,14 +2,42 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/item_home_gridlayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" 
-    android:padding="5dp"
-    android:orientation="vertical">
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_input_search"
+    android:orientation="vertical" >
 
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/item_home_iv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:layout_gravity="center_horizontal"
         android:scaleType="fitXY" />
+
+    <TextView
+        android:id="@+id/item_home_tv_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:minLines="2"
+        android:maxLines="2"
+        android:textColor="@color/gray"
+        android:textSize="15sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/gray" />
+
+    <TextView
+        android:id="@+id/item_home_tv_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:minLines="1"
+        android:maxLines="1"
+        android:textColor="@color/red"
+        android:textSize="17sp" />
 
 </LinearLayout>
