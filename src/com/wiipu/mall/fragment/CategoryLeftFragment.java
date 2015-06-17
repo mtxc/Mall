@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.wiipu.mall.R;
 import com.wiipu.mall.adapter.CategoryLeftListAdapter;
@@ -25,32 +26,47 @@ public class CategoryLeftFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		categorys = new ArrayList<CategoryData>();
-		adapter = new CategoryLeftListAdapter(getActivity(), categorys, R.layout.item_category_left_lv);
-		setListAdapter(adapter);
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		getCategoryData();
 		return inflater.inflate(R.layout.fragment_category_left, container, true);
 	}
 	
 	@Override
 	public void onStart() {
 		super.onStart();
+		categorys = new ArrayList<CategoryData>();
+		adapter = new CategoryLeftListAdapter(getActivity(), categorys, R.layout.item_category_left_lv);
+		setListAdapter(adapter);
 		getListView().setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				refresh(((CategoryData)parent.getItemAtPosition(position)).getId());				
+				view.setSelected(true);
 			}
 		});
+		getListView().setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int position, long id) {
+				refresh(categorys.get(position).getId());
+			}
+			
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				
+			}
+		});
+		getCategoryData();
 	}
 	
+	/**
+	 * 从服务器获取一级分类数据
+	 */
 	private void getCategoryData(){
 		ArrayList<CategoryData> list = new ArrayList<CategoryData>();
 		////////////////////////////////////////
@@ -68,6 +84,10 @@ public class CategoryLeftFragment extends ListFragment {
 		adapter.notifyDataSetChanged();
 	}
 	
+	/**
+	 * 刷新二级分类
+	 * @param id 一级分类的id
+	 */
 	private void refresh(int id){
 		CategoryRightFragment fragment = (CategoryRightFragment) getActivity().getFragmentManager().findFragmentById(R.id.category_right_fragment);
 		fragment.refreshSecondCategorys(id);

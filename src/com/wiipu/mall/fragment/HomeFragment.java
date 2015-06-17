@@ -112,8 +112,8 @@ public class HomeFragment extends Fragment {
 		viewPager.setFocusableInTouchMode(true);
 		viewPager.requestFocus();
 		// 顶部搜索部分
-		etSearch = (EditText) view.findViewById(R.id.top_et_search);
-		ibSearch = (ImageButton) view.findViewById(R.id.top_ib_search);
+		etSearch = (EditText) view.findViewById(R.id.home_top_et_search);
+		ibSearch = (ImageButton) view.findViewById(R.id.home_top_ib_search);
 		ibSearch.setOnClickListener(new OnClickListener() {
 
 			@Override
