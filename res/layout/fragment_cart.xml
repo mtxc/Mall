@@ -1,0 +1,115 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="@string/my"
+        android:textSize="17sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/divide_line" />
+
+    <ListView
+        android:id="@+id/main_listView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <RelativeLayout
+        android:id="@+id/price_relative"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:background="#cc111111"
+        android:visibility="visible" >
+
+        <CheckBox
+            android:id="@+id/all_check"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="1dp"
+            android:gravity="center_vertical" />
+
+        <TextView
+            android:id="@+id/collection"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/all_check"
+            android:gravity="center"
+            android:text="@string/allslect"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <!-- 商品总价提示 -->
+
+        <TextView
+            android:id="@+id/shopTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/collection"
+            android:text="@string/shopTotal"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+        <!-- 选中商品的总金额 -->
+
+        <TextView
+            android:id="@+id/shopTotalPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/shopTotal"
+            android:text="@string/shopTotalNum"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <!-- 商品总价提示 -->
+
+        <TextView
+            android:id="@+id/Total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/shopTotal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/collection"
+            android:text="@string/shopTotalPrice"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+        <!-- 选中商品的总金额 -->
+
+        <TextView
+            android:id="@+id/shopTotalNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/shopTotal"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/Total"
+            android:text="@string/shopTotalNum"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/checkOut"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/round_rect_bg_red"
+            android:gravity="center"
+            android:text="@string/checkOut"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+</LinearLayout>

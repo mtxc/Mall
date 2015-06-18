@@ -167,5 +167,19 @@ public class MainActivity extends Activity implements OnClickListener {
 	public Fragment getCurrentFragment() {
 		return mCurrentFragment;
 	}
+	
+	/**
+	 * 点击MyFragment中查看所有收藏的处理事件
+	 * @param view 被点击的view
+	 */
+	public void showAllCollection(View view){
+	}
+	
+	/**
+	 * 点击MyFragment中查看所有订单的处理事件
+	 * @param view 被点击的view
+	 */
+	public void showAllOrder(View view){
+	}
 
 }

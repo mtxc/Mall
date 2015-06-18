@@ -12,8 +12,6 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:layout_marginTop="5dp"
-        android:drawableLeft="@drawable/home_floor_icon"
-        android:drawablePadding="20dp"
         android:textColor="@color/red"
         android:textSize="25sp" />
 
