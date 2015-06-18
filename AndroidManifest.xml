@@ -6,7 +6,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-sdk
+
+    <uses-sdk
         android:minSdkVersion="17"
         android:targetSdkVersion="19" />
 
@@ -24,8 +25,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.CheckOutActivity"/>
-        <activity android:name=".activity.UpdateAddressActivity"/>
+        <activity android:name=".activity.CheckOutActivity" />
+        <activity android:name=".activity.UpdateAddressActivity" />
+        <activity android:name=".activity.LoginActivity" />
     </application>
 
 </manifest>
