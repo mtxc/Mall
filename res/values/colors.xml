@@ -5,4 +5,5 @@
     <color name="white">#FFFFFF</color>
     <color name="divide_line">#cccccc</color>
     <color name="bg_gray">#EEEEEE</color>
+    <color name="black">#000000</color>
 </resources>

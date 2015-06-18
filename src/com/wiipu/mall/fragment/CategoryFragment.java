@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
@@ -53,6 +55,16 @@ public class CategoryFragment extends Fragment {
 		return view;
 	}
 	
+	@Override
+	public void onStart() {
+		super.onStart();
+		// 解决列表选中状态的item在按home键之后，重新进入时为非选中状态的问题
+		View v = listView.getChildAt(selectedPosition-listView.getFirstVisiblePosition());
+		if(v != null){
+			v.setSelected(true);
+		}
+	}
+	
 	/**
 	 * 初始化视图
 	 * @param view 父视图
@@ -88,6 +100,26 @@ public class CategoryFragment extends Fragment {
 				}
 			}
 		});
+		// 解决列表选中状态的item出屏后重新出现时为非选中状态的问题
+		listView.setOnScrollListener(new OnScrollListener() {
+			
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				if(selectedPosition >= view.getFirstVisiblePosition() || selectedPosition <= view.getLastVisiblePosition()){
+					View v = view.getChildAt(selectedPosition-view.getFirstVisiblePosition());
+					if(v != null){
+						v.setSelected(true);
+					}
+				}
+			}
+			
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+				
+			}
+		});
+		// 获取一级分类数据
 		getCategoryData();
 		// 网格相关
 		gridView = (GridView) view.findViewById(R.id.category_gridView);
@@ -147,4 +179,5 @@ public class CategoryFragment extends Fragment {
 		gridCategorys.addAll(list);
 		gridAdapter.notifyDataSetChanged();
 	}
+	
 }

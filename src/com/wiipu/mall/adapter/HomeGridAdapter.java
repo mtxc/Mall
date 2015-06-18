@@ -46,7 +46,7 @@ public class HomeGridAdapter extends UniversalAdapter<ProductData> {
 
 		NetworkImageView iv = (NetworkImageView) holder
 				.getView(R.id.item_home_iv);
-		NetworkManager.getInstance().setImageUrl(iv, data.getImgUrls().get(0));
+		NetworkManager.getInstance().setImageUrl(iv, data.getImgUrl());
 		holder.setTextViewText(R.id.item_home_tv_info, data.getInfo());
 		holder.setTextViewText(R.id.item_home_tv_price, "￥" + data.getPrice());
 	}

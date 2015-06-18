@@ -2,24 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
-    
-    <TextView 
+    android:orientation="vertical" >
+
+    <TextView
         android:id="@+id/item_home_tv_floor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
-        android:layout_marginLeft="20dp"
-        android:textSize="20sp"
-        android:textColor="@color/red"/>
-    
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_marginTop="5dp"
+        android:drawableLeft="@drawable/home_floor_icon"
+        android:drawablePadding="20dp"
+        android:textColor="@color/red"
+        android:textSize="25sp" />
+
     <com.wiipu.mall.noscrollview.NoScrollGridView
         android:id="@+id/item_home_grid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:numColumns="2"
         android:horizontalSpacing="10dp"
-        android:verticalSpacing="10dp"/>
+        android:numColumns="2"
+        android:verticalSpacing="10dp" />
 
 </LinearLayout>

@@ -1,7 +1,5 @@
 package com.wiipu.mall.model;
 
-import java.util.ArrayList;
-
 /**
  * 商品数据
  */
@@ -14,7 +12,7 @@ public class ProductData {
 	/**
 	 * 商品图片url数组
 	 */
-	private ArrayList<String> imgUrls;
+	private String imgUrl;
 	private String info;
 	private int price;
 
@@ -42,17 +40,17 @@ public class ProductData {
 		this.id = id;
 	}
 
-	public ArrayList<String> getImgUrls() {
-		return imgUrls;
+	public String getImgUrl() {
+		return imgUrl;
 	}
 
-	public void setImgUrls(ArrayList<String> imgUrls) {
-		this.imgUrls = imgUrls;
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 
 	@Override
 	public String toString() {
-		return "ProductData [id=" + id + ", imgUrls=" + imgUrls + ", info="
+		return "ProductData [id=" + id + ", imgUrl=" + imgUrl + ", info="
 				+ info + ", price=" + price + "]";
 	}
 

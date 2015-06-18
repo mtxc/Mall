@@ -172,24 +172,25 @@ public class HomeFragment extends Fragment {
 		ArrayList<HomeFloorData> list = new ArrayList<HomeFloorData>();
 		// ///////////////////////////////////////
 		// /////////////////假数据/////////////////
-		ArrayList<String> imgs = new ArrayList<String>();
-		ArrayList<ProductData> products = new ArrayList<ProductData>();
+		String imgUrl = "http://b.hiphotos.baidu.com/image/pic/item/14ce36d3d539b6006bae3d86ea50352ac65cb79a.jpg";
+		ArrayList<ProductData> products;
 		HomeFloorData floor;
 		ProductData product;
-		imgs.add("http://b.hiphotos.baidu.com/image/pic/item/14ce36d3d539b6006bae3d86ea50352ac65cb79a.jpg");
-		for (int i = 0; i < 10; i++) {
-			product = new ProductData();
-			product.setId(i);
-			product.setImgUrls(imgs);
-			product.setInfo("上岛咖啡上岛咖啡上岛咖啡上岛咖啡上岛咖啡");
-			product.setPrice(i*2);
-			products.add(product);
+		for (int j = 0; j < 2; j++) {
+			products = new ArrayList<ProductData>();
+			for (int i = 0; i < 10; i++) {
+				product = new ProductData();
+				product.setId(i);
+				product.setImgUrl(imgUrl);
+				product.setInfo("上岛咖啡上岛咖啡上岛咖啡上岛咖啡上岛咖啡");
+				product.setPrice(i * 2);
+				products.add(product);
+			}
+			floor = new HomeFloorData();
+			floor.setFloor(j + "F");
+			floor.setProducts(products);
+			list.add(floor);
 		}
-		floor = new HomeFloorData();
-		floor.setFloor("1F");
-		floor.setProducts(products);
-		list.add(floor);
-		list.add(floor);
 		// ///////////////////////////////////////
 		return list;
 	}

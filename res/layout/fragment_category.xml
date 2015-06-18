@@ -22,6 +22,7 @@
             android:background="@drawable/shape_input_search"
             android:hint="@string/find_et_hint"
             android:textColorHint="@color/gray"
+            android:singleLine="true"
             android:textSize="15sp" />
 
         <ImageButton
@@ -34,6 +35,7 @@
             android:contentDescription="@string/search"
             android:scaleType="centerInside"
             android:src="@drawable/top_search_icon" />
+        
     </LinearLayout>
 
     <LinearLayout
@@ -57,9 +59,13 @@
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:background="@color/white"
-            android:horizontalSpacing="10dp"
+            android:horizontalSpacing="9dp"
             android:numColumns="3"
-            android:verticalSpacing="10dp" />
+            android:paddingEnd="9dp"
+            android:paddingStart="9dp"
+            android:paddingTop="9dp"
+            android:verticalSpacing="9dp" />
+        
     </LinearLayout>
 
 </LinearLayout>
