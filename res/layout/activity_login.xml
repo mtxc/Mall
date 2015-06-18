@@ -1,11 +1,11 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bg_gray"
         android:orientation="vertical" >
 
         <RelativeLayout
@@ -15,7 +15,7 @@
 
             <ImageButton
                 android:id="@+id/login_ib_back"
-                android:layout_width="wrap_content"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
@@ -120,6 +120,17 @@
             android:background="@drawable/selector_btn_login"
             android:enabled="false"
             android:text="@string/login"
+            android:textColor="@color/white"
+            android:textSize="17sp" />
+
+        <Button
+            android:id="@+id/login_btn_register"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="15dp"
+            android:background="@drawable/selector_btn_login"
+            android:enabled="false"
+            android:text="@string/register"
             android:textColor="@color/white"
             android:textSize="17sp" />
     </LinearLayout>
