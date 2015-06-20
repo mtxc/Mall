@@ -40,5 +40,6 @@
     <string name="sureOrder">确认订单</string>
     <string name="leaveMeassge">给卖家留言</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="text_btn_addIntoCart">加入购物车</string>
 
 </resources>

@@ -28,6 +28,8 @@
         <activity android:name=".activity.CheckOutActivity" />
         <activity android:name=".activity.UpdateAddressActivity" />
         <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.ProductDetailsThirdLayerActivity" >
+        </activity>
     </application>
 
 </manifest>
