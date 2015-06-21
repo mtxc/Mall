@@ -22,7 +22,13 @@
     <string name="account_hint">用户名/邮箱/手机号</string>
     <string name="password">密码：</string>
     <string name="password_hint">请输入密码</string>
-    
+    <string name="edit">编辑</string>
+    <string name="suggest">请先登录再查看购物车</string>
+    <string name="cart_empty">购物车肚子空空</string>
+    <string name="selectAll">全选</string>
+    <string name="buy">去结算</string>
+    <string name="add">+</string>
+    <string name="sub">-</string>
     <string name="action_settings">Settings</string>
     <string name="myShop">购物车</string>
     <string name="updateShopNum">修改商品数量</string>
@@ -41,5 +47,6 @@
     <string name="leaveMeassge">给卖家留言</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="text_btn_addIntoCart">加入购物车</string>
+    <string name="accomplish">完成</string>
 
 </resources>

@@ -10,11 +10,11 @@ public class ProductData {
 	 */
 	private int id;
 	/**
-	 * 商品图片url数组
+	 * 商品图片url
 	 */
 	private String imgUrl;
 	private String info;
-	private int price;
+	private float price;
 
 	public String getInfo() {
 		return info;
@@ -24,11 +24,11 @@ public class ProductData {
 		this.info = info;
 	}
 
-	public int getPrice() {
+	public float getPrice() {
 		return price;
 	}
 
-	public void setPrice(int price) {
+	public void setPrice(float price) {
 		this.price = price;
 	}
 

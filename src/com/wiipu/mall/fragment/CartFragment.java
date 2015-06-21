@@ -1,213 +1,242 @@
 package com.wiipu.mall.fragment;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wiipu.mall.R;
-import com.wiipu.mall.activity.CheckOutActivity;
-import com.wiipu.mall.shoppingcart.ShopAdapter;
-import com.wiipu.mall.shoppingcart.ShopBean;
-import com.wiipu.mall.shoppingcart.ShoppingCanst;
+import com.wiipu.mall.activity.LoginActivity;
+import com.wiipu.mall.adapter.CartListAdapter;
+import com.wiipu.mall.adapter.CartListAdapter.OnPriceChangedListener;
+import com.wiipu.mall.model.Global;
+import com.wiipu.mall.model.ProductData;
 
 /**
  * 购物车Fragment
  */
 public class CartFragment extends Fragment {
-	
-	private CheckBox checkBox;
+
+	/**
+	 * 顶部
+	 */
+	private Button btnEdit;
+	/**
+	 * 提示登录
+	 */
+	private RelativeLayout suggestLayout;
+	private Button btnLogin;
+	/**
+	 * 购物车为空
+	 */
+	private TextView tvEmpty;
+	/**
+	 * 购物车列表
+	 */
+	private LinearLayout listLayout;
 	private ListView listView;
-	private TextView shopTotalPrice;		//结算的价格
-	private TextView shopTotalNum; //总价
-	private TextView popRecycle;		//收藏
-	private TextView popCheckOut;		//结算
-	private RelativeLayout layout;		//结算布局
-	private ShopAdapter adapter;		//自定义适配器
-	private List<ShopBean> list;		//购物车数据集合
-	
-	private boolean flag = true;		//全选或全取消
+	private CartListAdapter adapter;
+	private ArrayList<ProductData> products;
+	/**
+	 * 底部付款
+	 */
+	private RelativeLayout checkLayout;
+	private CheckBox cbCheckAll;
+	private TextView tvTotal;
+	private Button btnBuy;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.fragment_cart, container, false);
-            initViews(view);
-    		init();
-    		return view;
+		View view = inflater.inflate(R.layout.fragment_cart, container, false);
+		initData();
+		initView(view);
+		return view;
 	}
-		
-	//初始化UI界面
-	private void initViews(View view){
-		checkBox = (CheckBox) view.findViewById(R.id.all_check);
-		listView = (ListView) view.findViewById(R.id.main_listView);
-		shopTotalPrice = (TextView) view.findViewById(R.id.shopTotalPrice);
-		shopTotalNum = (TextView) view.findViewById(R.id.shopTotalNum);
-		popRecycle = (TextView) view.findViewById(R.id.collection);
-		popCheckOut = (TextView) view.findViewById(R.id.checkOut);
-		layout = (RelativeLayout) view.findViewById(R.id.price_relative);
-		
-		ClickListener cl = new ClickListener();
-		checkBox.setOnClickListener(cl);
-		popCheckOut.setOnClickListener(cl);
-		popRecycle.setOnClickListener(cl);
-	}
-	
-	//初始化数据
-	private void init(){
-		getListData();
-		list = ShoppingCanst.list;
-		adapter = new ShopAdapter(getActivity(),list,handler,R.layout.cart_main_item);
-		listView.setAdapter(adapter);
-	}
-	
-	//获取集合数据
-	private void getListData(){
-		ShoppingCanst.list = new ArrayList<ShopBean>();
-		ShopBean bean = new ShopBean();
-		bean.setShopId(1);
-		bean.setShopPicture(R.drawable.shoes1);
-		bean.setStoreName("花花公子");
-		bean.setShopName("Simier 斯米尔英伦风日常休闲男鞋单鞋 秋季真皮皮鞋鞋子男6639");
-		bean.setShopDescription("颜色：蓝色，尺码：41");
-		bean.setShopPrice(199);
-		bean.setShopNumber(1);
-		bean.setChoosed(false);
-		ShoppingCanst.list.add(bean);
-		ShopBean bean2 = new ShopBean();
-		bean2.setShopId(2);
-		bean2.setShopPicture(R.drawable.shoes2);
-		bean2.setStoreName("木林森");
-		bean2.setShopName("Camel 骆驼男鞋 男士日常休闲皮鞋 2014秋冬真皮系带休闲鞋子男");
-		bean2.setShopDescription("颜色：蓝色，尺码：41");
-		bean2.setShopPrice(399);
-		bean2.setShopNumber(1);
-		bean2.setChoosed(false);
-		ShoppingCanst.list.add(bean2);
-		ShopBean bean3 = new ShopBean();
-		bean3.setShopId(3);
-		bean3.setShopPicture(R.drawable.shoes3);
-		bean3.setStoreName("西瑞");
-		bean3.setShopName("雷艾新款男鞋子 韩版 潮流 男鞋男休闲鞋 板鞋 鞋子 男 休闲皮鞋");
-		bean3.setShopDescription("颜色：黑色，尺码：41");
-		bean3.setShopPrice(198);
-		bean3.setShopNumber(1);
-		bean3.setChoosed(false);
-		ShoppingCanst.list.add(bean3);
-		ShopBean bean4 = new ShopBean();
-		bean4.setShopId(4);
-		bean4.setShopPicture(R.drawable.shoes4);
-		bean4.setStoreName("古奇天伦");
-		bean4.setShopName("奥康男鞋春秋透气系带板鞋男韩版潮流男士休闲鞋真皮低帮鞋子男");
-		bean4.setShopDescription("颜色：蓝色，尺码：41");
-		bean4.setShopPrice(599);
-		bean4.setShopNumber(1);
-		bean4.setChoosed(false);
-		ShoppingCanst.list.add(bean4);
-	}
-	
-	//事件点击监听器
-	private final class ClickListener implements OnClickListener{
-		@Override
-		public void onClick(View v) {
-			switch (v.getId()) {
-			case R.id.all_check:		//全选
-				selectedAll();
-				break;
-			case R.id.checkOut:			//结算
-				goCheckOut();
-				break;
-			}
-		}
-	}
-	
-	//结算
-	private void goCheckOut(){
-		String shopIndex = deleteOrCheckOutShop();
-		Intent checkOutIntent = new Intent(getActivity(),CheckOutActivity.class);
-		checkOutIntent.putExtra("shopIndex", shopIndex);
-		startActivity(checkOutIntent);
-	}
-	
-	//全选或全取消
-	private void selectedAll(){
-		for(int i=0;i<list.size();i++){
-			ShopAdapter.getIsSelected().put(i, flag);
-		}
-		adapter.notifyDataSetChanged();
-	}
-	
-	//删除或结算商品
-	private String deleteOrCheckOutShop(){
-		StringBuffer sb = new StringBuffer();
-		for(int i=0;i<list.size();i++){
-			if(ShopAdapter.getIsSelected().get(i)){
-				sb.append(i);
-				sb.append(",");
-			}
-		}
-		sb.deleteCharAt(sb.length()-1);
-		return sb.toString();
-	}
-	
-	//弹出对话框询问用户是否删除被选中的商品
-//	private void showDialogDelete(String str){
-//		final String[] delShopIndex = str.split(",");
-//		new AlertDialog.Builder(getActivity())
-//		.setMessage("您确定删除这"+delShopIndex.length+"商品吗？")
-//		.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-//			@Override
-//			public void onClick(DialogInterface arg0, int arg1) {
-//				for(String s : delShopIndex){
-//					int index = Integer.valueOf(s);
-//					list.remove(index);
-//					ShoppingCanst.list.remove(index);
-//					//连接服务器之后，获取数据库中商品对应的ID，删除商品
-////					list.get(index).getShopId();
-//				}
-//				flag = false;
-//				selectedAll();	//删除商品后，取消所有的选择
-//				flag = true;	//刷新页面后，设置Flag为true，恢复全选功能
-//			}
-//		}).setNegativeButton("取消", null)
-//		.create().show();
-//	}
-	
-	@SuppressLint("HandlerLeak")
-	private Handler handler = new Handler(){
-		@Override
-		public void handleMessage(Message msg) {
-			super.handleMessage(msg);
-			if(msg.what == 10){	//更改选中商品的总价格
-				float price = (Float)msg.obj;
-				if(price > 0){
-					shopTotalPrice.setText("￥"+price);
-					shopTotalNum.setText("￥"+price);
-					layout.setVisibility(View.VISIBLE);
-				}else{
-					layout.setVisibility(View.GONE);
-				}
-			}else if(msg.what == 11){
-				//所有列表中的商品全部被选中，让全选按钮也被选中
-				//flag记录是否全被选中
-				flag = !(Boolean)msg.obj;
-				checkBox.setChecked((Boolean)msg.obj);
-			}
-		}
-	};
-	
 
-	
+	@Override
+	public void onStart() {
+		super.onStart();
+		if (Global.isLogin) {
+			// 已登录
+			// 隐藏提示登录的布局
+			suggestLayout.setVisibility(View.GONE);
+			getCartProducts();
+		} else {
+			// 未登录
+			// 隐藏编辑按钮
+			btnEdit.setVisibility(View.GONE);
+			// 隐藏购物车列表
+			listLayout.setVisibility(View.GONE);
+			// 隐藏底部付款布局
+			checkLayout.setVisibility(View.GONE);
+			// 显示提示登录的布局
+			suggestLayout.setVisibility(View.VISIBLE);
+			// 显示购物车为空的布局
+			tvEmpty.setVisibility(View.VISIBLE);
+		}
+	}
+
+	/**
+	 * 初始化视图
+	 * 
+	 * @param view
+	 *            父视图
+	 */
+	private void initView(View view) {
+		btnEdit = (Button) view.findViewById(R.id.cart_btn_edit);
+		btnEdit.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// 编辑按钮
+				if (btnEdit.getText().toString()
+						.equals(getResources().getString(R.string.edit))) {
+					btnEdit.setText(getResources().getString(
+							R.string.accomplish));
+					// 全部取消选中
+					cbCheckAll.setChecked(false);
+					// 隐藏价格总数文本框
+					tvTotal.setVisibility(View.INVISIBLE);
+					// 将结算按钮改成删除按钮
+					btnBuy.setText(getResources().getString(R.string.delete));
+					// 完成按钮
+				} else {
+					btnEdit.setText(getResources().getString(R.string.edit));
+					// 全部选中
+					cbCheckAll.setChecked(true);
+					// 显示价格总数文本框
+					tvTotal.setVisibility(View.VISIBLE);
+					// 将删除按钮改成结算按钮
+					btnBuy.setText(getResources().getString(R.string.buy));
+				}
+			}
+		});
+		suggestLayout = (RelativeLayout) view
+				.findViewById(R.id.cart_suggest_layout);
+		btnLogin = (Button) view.findViewById(R.id.cart_btn_login);
+		btnLogin.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// 跳转登录界面
+				startActivity(new Intent(getActivity(), LoginActivity.class));
+				// ////////////////////////////
+				// //////////模拟登录///////////
+				Global.isLogin = true;
+			}
+		});
+		tvEmpty = (TextView) view.findViewById(R.id.cart_tv_empty);
+		listLayout = (LinearLayout) view.findViewById(R.id.cart_list_layout);
+		listView = (ListView) view.findViewById(R.id.cart_lv);
+		listView.setAdapter(adapter);
+		checkLayout = (RelativeLayout) view
+				.findViewById(R.id.cart_check_layout);
+		cbCheckAll = (CheckBox) view.findViewById(R.id.cart_cb_all);
+		cbCheckAll.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView,
+					boolean isChecked) {
+				// 全选监听
+				for (int i = 0; i < products.size(); i++) {
+					adapter.getIsChecked().put(i, isChecked);
+				}
+				adapter.notifyDataSetChanged();
+			}
+		});
+		tvTotal = (TextView) view.findViewById(R.id.cart_tv_total);
+		btnBuy = (Button) view.findViewById(R.id.cart_btn_buy);
+		btnBuy.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// 结算按钮
+				if (btnBuy.getText().toString()
+						.equals(getResources().getString(R.string.buy))) {
+					
+					// 删除按钮
+				} else {
+					
+				}
+			}
+		});
+		adapter.setOnPriceChangedListener(new OnPriceChangedListener() {
+
+			@Override
+			public void onPriceChanged(final float price) {
+				tvTotal.post(new Runnable() {
+
+					@Override
+					public void run() {
+						tvTotal.setText("合计：￥" + price);
+					}
+				});
+			}
+		});
+	}
+
+	/**
+	 * 初始化数据
+	 */
+	private void initData() {
+		products = new ArrayList<ProductData>();
+		adapter = new CartListAdapter(getActivity(), products,
+				R.layout.item_cart_lv);
+	}
+
+	/**
+	 * 从服务器获取购物车商品数据
+	 */
+	private void getCartProducts() {
+		ArrayList<ProductData> list = new ArrayList<ProductData>();
+		for (int i = 0; i < 5; i++) {
+			ProductData data = new ProductData();
+			data.setId(i);
+			data.setImgUrl("http://b.hiphotos.baidu.com/image/pic/item/14ce36d3d539b6006bae3d86ea50352ac65cb79a.jpg");
+			data.setInfo("上岛咖啡上岛咖啡上岛咖啡上岛咖啡上岛咖啡上岛咖啡");
+			data.setPrice(120);
+			list.add(data);
+		}
+		products.clear();
+		products.addAll(list);
+		for (int i = 0; i < products.size(); i++) {
+			adapter.getIsChecked().put(i, true);
+			adapter.getNums().put(i, 1);
+		}
+		cbCheckAll.setChecked(true);
+		if (products.size() == 0) {
+			// 购物车为空
+			// 隐藏编辑按钮
+			btnEdit.setVisibility(View.GONE);
+			// 隐藏购物车列表布局
+			listLayout.setVisibility(View.GONE);
+			// 隐藏底部结算布局
+			checkLayout.setVisibility(View.GONE);
+			// 显示购物车为空的布局
+			tvEmpty.setVisibility(View.VISIBLE);
+		} else {
+			// 购物车不为空
+			// 隐藏购物车为空的布局
+			tvEmpty.setVisibility(View.GONE);
+			// 显示编辑按钮
+			btnEdit.setVisibility(View.VISIBLE);
+			// 显示购物车列表布局
+			listLayout.setVisibility(View.VISIBLE);
+			// 显示底部结算布局
+			checkLayout.setVisibility(View.VISIBLE);
+			adapter.notifyDataSetChanged();
+			tvTotal.setText("合计：￥" + adapter.calculatePrice());
+		}
+	}
+
 }
