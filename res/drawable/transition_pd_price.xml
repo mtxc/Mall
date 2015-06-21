@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<transition xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item android:drawable="@drawable/pd_button_price_up"/>
+    <item android:drawable="@drawable/pd_button_price_down"/>
+
+</transition>

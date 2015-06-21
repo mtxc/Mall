@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.wiipu.mall.R;
+import com.wiipu.mall.activity.ProductDetailsSecondLayerActivity;
 import com.wiipu.mall.activity.ProductDetailsThirdLayerActivity;
 import com.wiipu.mall.adapter.CategoryLeftListAdapter;
 import com.wiipu.mall.adapter.CategoryRightGridAdapter;
@@ -137,6 +138,15 @@ public class CategoryFragment extends Fragment {
 		gridAdapter = new CategoryRightGridAdapter(getActivity(),
 				gridCategorys, R.layout.item_category_right_grid);
 		gridView.setAdapter(gridAdapter);
+		gridView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				startActivity(new Intent(getActivity(),
+						ProductDetailsSecondLayerActivity.class));
+			}
+		});
 	}
 
 	/**

@@ -10,11 +10,13 @@ import com.wiipu.mall.R;
 import com.wiipu.mall.network.NetworkManager;
 
 import android.app.Activity;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView.ScaleType;
 
 public class ProductDetailsThirdLayerActivity extends Activity {
@@ -26,7 +28,13 @@ public class ProductDetailsThirdLayerActivity extends Activity {
 	private CirclePageIndicator indicator;
 	private ArrayList<View> viewContainer;
 	private PagerAdapter pagerAdapter;
-	private Button btnBack;
+	private ImageButton btnBack;
+	private ImageButton btnCollect;
+
+	/**
+	 * 表示该商品是否被收藏
+	 * */
+	private boolean collected = false;
 
 	/**
 	 * 存储图片url地址
@@ -80,14 +88,34 @@ public class ProductDetailsThirdLayerActivity extends Activity {
 	}
 
 	private void initButtons() {
-		btnBack = (Button) findViewById(R.id.pd_btn_back);
+		btnBack = (ImageButton) findViewById(R.id.pd_btn_back);
+		btnCollect = (ImageButton) findViewById(R.id.pd_btn_collect);
 		OnClickListener listener = new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				ProductDetailsThirdLayerActivity.this.finish();
+				switch (v.getId()) {
+				case R.id.pd_btn_collect:
+					if (!collected) {
+						((TransitionDrawable) btnCollect.getDrawable())
+								.startTransition(200);
+						collected = true;
+					} else {
+						((TransitionDrawable) btnCollect.getDrawable())
+								.reverseTransition(200);
+						collected = false;
+					}
+
+					break;
+
+				default:
+					ProductDetailsThirdLayerActivity.this.finish();
+					break;
+				}
+
 			}
 		};
+		btnCollect.setOnClickListener(listener);
 		btnBack.setOnClickListener(listener);
 	}
 
