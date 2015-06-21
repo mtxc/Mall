@@ -21,5 +21,4 @@ public class HomeFloorListData {
 	public String toString() {
 		return "HomeFloorListData [floors=" + floors + "]";
 	}
-	
 }

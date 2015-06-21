@@ -18,7 +18,7 @@ public class Constants {
 	public static final String URL = "http://192.168.0.104:8080/VolleyTest/servlet/TestServlet";
 	public static final String APPKEY = "888";
 	public static final int RTIMES = 1;
-	public static final String SECRET = "123456";
+	public static final String SECRET = "567745674567544";
 
 	/**
 	 * 获取设备的sn码
