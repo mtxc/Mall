@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:descendantFocusability="blocksDescendants">
+
+    <CheckBox
+        android:id="@+id/item_cart_cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:button="@drawable/selector_cb_cart"
+        android:background="@null"
+        android:layout_marginStart="10dp" />
+
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/item_cart_iv"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_margin="5dp"
+        android:layout_toRightOf="@id/item_cart_cb"
+        android:scaleType="centerInside" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:layout_toRightOf="@id/item_cart_iv"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/item_cart_tv_info"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:maxLines="2"
+            android:minLines="2"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/item_cart_tv_price"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textSize="17sp" />
+
+        <LinearLayout
+            android:layout_width="130dp"
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
+            android:background="@drawable/shape_cart_num"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/item_cart_btn_sub"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="#00000000"
+                android:enabled="false"
+                android:text="@string/sub" />
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="@color/gray" />
+
+            <EditText
+                android:id="@+id/item_cart_et_num"
+                android:layout_width="60dp"
+                android:layout_height="35dp"
+                android:background="#00000000"
+                android:gravity="center"
+                android:inputType="number"
+                android:text="1" />
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="@color/gray" />
+
+            <Button
+                android:id="@+id/item_cart_btn_add"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="#00000000"
+                android:text="@string/add" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -25,8 +25,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.CheckOutActivity" />
-        <activity android:name=".activity.UpdateAddressActivity" />
         <activity android:name=".activity.LoginActivity" />
     </application>
 
