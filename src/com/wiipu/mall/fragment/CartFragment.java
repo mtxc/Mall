@@ -102,6 +102,26 @@ public class CartFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// 编辑按钮
+				if (btnEdit.getText().toString()
+						.equals(getResources().getString(R.string.edit))) {
+					btnEdit.setText(getResources().getString(
+							R.string.accomplish));
+					// 全部取消选中
+					cbCheckAll.setChecked(false);
+					// 隐藏价格总数文本框
+					tvTotal.setVisibility(View.INVISIBLE);
+					// 将结算按钮改成删除按钮
+					btnBuy.setText(getResources().getString(R.string.delete));
+					// 完成按钮
+				} else {
+					btnEdit.setText(getResources().getString(R.string.edit));
+					// 全部选中
+					cbCheckAll.setChecked(true);
+					// 显示价格总数文本框
+					tvTotal.setVisibility(View.VISIBLE);
+					// 将删除按钮改成结算按钮
+					btnBuy.setText(getResources().getString(R.string.buy));
+				}
 			}
 		});
 		suggestLayout = (RelativeLayout) view
@@ -141,6 +161,13 @@ public class CartFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// 结算按钮
+				if (btnBuy.getText().toString()
+						.equals(getResources().getString(R.string.buy))) {
+					
+					// 删除按钮
+				} else {
+					
+				}
 			}
 		});
 		adapter.setOnPriceChangedListener(new OnPriceChangedListener() {
