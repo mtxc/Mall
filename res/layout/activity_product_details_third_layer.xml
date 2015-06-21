@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:padding="10dp" >
+
+                <ImageButton
+                    android:id="@+id/pd_btn_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/selector_btn_product_back" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="商品详情" />
+
+                <ImageButton
+                    android:id="@+id/pd_btn_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/pd_more_icon" />
+
+                <ImageButton
+                    android:id="@+id/pd_btn_foot_print"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@id/pd_btn_more"
+                    android:background="@drawable/pd_foot_print" />
+            </RelativeLayout>
+
+            <cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager
+                android:id="@+id/pd_viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+
+            <com.viewpagerindicator.CirclePageIndicator
+                android:id="@+id/pd_indicator"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="10dp" />
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="80dp"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="商品信息描述" />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/pd_arrow_r" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:text="￥:139.00"
+                    android:textColor="@color/red"
+                    android:textSize="20sp" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:background="@android:color/transparent" >
+
+        <ImageButton
+            android:id="@+id/pd_btn_collect"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="40dp"
+            android:background="@drawable/transition_pd_collect"
+            android:scaleType="fitXY" />
+
+        <Button
+            android:id="@+id/pd_btn_addIntoCart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_weight="1"
+            android:background="@drawable/selector_btn_collect"
+            android:text="@string/text_btn_addIntoCart"
+            android:textColor="@color/white" />
+
+        <ImageButton
+            android:id="@+id/pd_btn_cart"
+            android:layout_width="40dp"
+            android:layout_height="fill_parent"
+            android:layout_marginRight="30dp"
+            android:layout_toLeftOf="@id/pd_btn_addIntoCart"
+            android:background="@drawable/selector_pd_cart"
+            android:scaleType="fitXY" />
+    </RelativeLayout>
+
+</FrameLayout>
